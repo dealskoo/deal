@@ -1,0 +1,4 @@
+<?php
+return [
+    'deals' => 'Deals',
+];
