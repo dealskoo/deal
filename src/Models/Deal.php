@@ -20,7 +20,7 @@ class Deal extends Model
     use HasFactory, SoftDeletes, HasSlug, HasCategory, HasCountry, HasSeller, HasBrand, HasPlatform, HasProduct;
 
     protected $appends = [
-        'cover', 'cover_url'
+        'cover', 'cover_url', 'off'
     ];
 
     protected $fillable = [
@@ -57,6 +57,11 @@ class Deal extends Model
         return $this->product->cover_url;
     }
 
+    public function getOffAttribute()
+    {
+        return round((1 - ($this->price / $this->product->price)) * 100);
+    }
+
     public function scopeApproved(Builder $builder)
     {
         return $builder->whereNotNull('approved_at');
@@ -70,26 +75,33 @@ class Deal extends Model
 
     public function scopeBestDeals(Builder $builder)
     {
-
+        $now = Carbon::now();
+        return $builder->whereNotNull('approved_at')->where('start_at', '<=', $now)->where('end_at', '>=', $now)->where('recommend', true);
     }
 
     public function scopeBigDiscount(Builder $builder)
     {
-
+        $now = Carbon::now();
+        $price = $this->product->price / 4;
+        return $builder->whereNotNull('approved_at')->where('start_at', '<=', $now)->where('end_at', '>=', $now)->where('price', '<=', $price);
     }
 
     public function scopeFreeShipping(Builder $builder)
     {
-
+        $now = Carbon::now();
+        return $builder->whereNotNull('approved_at')->where('start_at', '<=', $now)->where('end_at', '>=', $now)->where('ship_fee', '=', 0);
     }
 
     public function scopeLimitedTime(Builder $builder)
     {
-
+        $now = Carbon::now();
+        $end = $now->addDay();
+        return $builder->whereNotNull('approved_at')->where('start_at', '<=', $now)->where('end_at', '<=', $end);
     }
 
     public function scopeZone(Builder $builder)
     {
-
+        $now = Carbon::now();
+        return $builder->whereNotNull('approved_at')->where('start_at', '<=', $now)->where('end_at', '>=', $now)->where('price', '<=', 0.01);
     }
 }
