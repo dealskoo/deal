@@ -34,12 +34,14 @@ class Deal extends Model
         'country_id',
         'brand_id',
         'platform_id',
+        'recommend',
         'approved_at',
         'start_at',
         'end_at'
     ];
 
     protected $casts = [
+        'recommend' => 'boolean',
         'approved_at' => 'datetime',
         'start_at' => 'datetime',
         'end_at' => 'datetime'
@@ -64,5 +66,30 @@ class Deal extends Model
     {
         $now = Carbon::now();
         return $builder->whereNotNull('approved_at')->where('start_at', '<=', $now)->where('end_at', '>=', $now);
+    }
+
+    public function scopeBestDeals(Builder $builder)
+    {
+
+    }
+
+    public function scopeBigDiscount(Builder $builder)
+    {
+
+    }
+
+    public function scopeFreeShipping(Builder $builder)
+    {
+
+    }
+
+    public function scopeLimitedTime(Builder $builder)
+    {
+
+    }
+
+    public function scopeZone(Builder $builder)
+    {
+
     }
 }

@@ -34,6 +34,7 @@ class DealFactory extends Factory
             'country_id' => $product->country_id,
             'brand_id' => $product->brand_id,
             'platform_id' => $product->platform_id,
+            'recommend' => false,
             'start_at' => $this->faker->dateTime,
             'end_at' => $this->faker->dateTime,
         ];
@@ -44,6 +45,15 @@ class DealFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'approved_at' => $this->faker->dateTime,
+            ];
+        });
+    }
+
+    public function recommend()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'recommend' => true,
             ];
         });
     }
