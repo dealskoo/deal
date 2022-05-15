@@ -9,6 +9,36 @@ class DealTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_slug()
+    {
+
+    }
+
+    public function test_country()
+    {
+
+    }
+
+    public function test_category()
+    {
+
+    }
+
+    public function test_brand()
+    {
+
+    }
+
+    public function test_platform()
+    {
+
+    }
+
+    public function test_seller()
+    {
+
+    }
+
     public function test_cover()
     {
 
