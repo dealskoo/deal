@@ -38,7 +38,7 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="title" class="form-label">{{ __('deal::deal.title') }}</label>
-                                <input type="text" class="form-control" id="title" name="title" required
+                                <input type="text" class="form-control" id="title" name="title" readonly
                                        value="{{ old('title',$deal->title) }}"
                                        placeholder="{{ __('deal::deal.title_placeholder') }}">
                             </div>
@@ -111,21 +111,21 @@
                             <div class="col-md-6 mb-3">
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="approved" name="approved"
-                                           tabindex="1"
+                                           tabindex="2"
                                            value="1" {{ $deal->approved_at?'checked':'' }}>
                                     <label for="approved"
                                            class="form-check-label">{{ __('deal::deal.approved') }}</label>
                                 </div>
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="recommend" name="recommend"
-                                           tabindex="1"
+                                           tabindex="3"
                                            value="1" {{ $deal->recommend?'checked':'' }}>
                                     <label for="recommend"
                                            class="form-check-label">{{ __('deal::deal.recommend') }}</label>
                                 </div>
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="big_discount" name="big_discount"
-                                           tabindex="1"
+                                           tabindex="4"
                                            value="1" {{ $deal->big_discount?'checked':'' }}>
                                     <label for="big_discount"
                                            class="form-check-label">{{ __('deal::deal.big_discount') }}</label>
@@ -133,7 +133,7 @@
                             </div>
                         </div> <!-- end row -->
                         <div class="text-end">
-                            <button type="submit" class="btn btn-success mt-2" tabindex="6"><i
+                            <button type="submit" class="btn btn-success mt-2" tabindex="5"><i
                                     class="mdi mdi-content-save"></i> {{ __('admin::admin.save') }}
                             </button>
                         </div>
