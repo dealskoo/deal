@@ -123,6 +123,13 @@
                                     <label for="recommend"
                                            class="form-check-label">{{ __('deal::deal.recommend') }}</label>
                                 </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="big_discount" name="big_discount"
+                                           tabindex="1"
+                                           value="1" {{ $deal->big_discount?'checked':'' }}>
+                                    <label for="big_discount"
+                                           class="form-check-label">{{ __('deal::deal.big_discount') }}</label>
+                                </div>
                             </div>
                         </div> <!-- end row -->
                         <div class="text-end">

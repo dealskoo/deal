@@ -25,7 +25,7 @@ class DealController extends AdminController
         $start = $request->input('start', 0);
         $limit = $request->input('length', 10);
         $keyword = $request->input('search.value');
-        $columns = ['id', 'title', 'price', 'ship_fee', 'seller_id', 'product_id', 'category_id', 'country_id', 'brand_id', 'platform_id', 'recommend', 'approved_at', 'start_at', 'end_at', 'created_at', 'updated_at'];
+        $columns = ['id', 'title', 'price', 'ship_fee', 'seller_id', 'product_id', 'category_id', 'country_id', 'brand_id', 'platform_id', 'recommend', 'big_discount', 'approved_at', 'start_at', 'end_at', 'created_at', 'updated_at'];
         $column = $columns[$request->input('order.0.column', 0)];
         $desc = $request->input('order.0.dir', 'desc');
         $query = Deal::query();
@@ -52,6 +52,7 @@ class DealController extends AdminController
             $row[] = $deal->brand ? $deal->brand->name : '';
             $row[] = $deal->platform ? $deal->platform->name : '';
             $row[] = $deal->recommend;
+            $row[] = $deal->big_discount;
             $row[] = $deal->approved_at != null ? Carbon::parse($deal->approved_at)->format('Y-m-d H:i:s') : null;
             $row[] = $deal->start_at != null ? Carbon::parse($deal->start_at)->format('Y-m-d') : null;
             $row[] = $deal->end_at != null ? Carbon::parse($deal->end_at)->format('Y-m-d') : null;
@@ -102,6 +103,7 @@ class DealController extends AdminController
             'slug'
         ]));
         $deal->recommend = $request->boolean('recommend', false);
+        $deal->big_discount = $request->boolean('big_discount', false);
         $deal->approved_at = $request->boolean('approved', false) ? Carbon::now() : null;
         $deal->save();
         return back()->with('success', __('admin::admin.update_success'));

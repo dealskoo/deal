@@ -14,6 +14,7 @@ return [
     'brand' => '品牌',
     'platform' => '平台',
     'recommend' => '推荐',
+    'big_discount' => '大额折扣',
     'approved_at' => '审核时间',
     'start_at' => '开始时间',
     'end_at' => '结束时间',

@@ -97,13 +97,18 @@
                             <input type="text" class="form-control" id="approved_at" name="approved_at" readonly
                                    value="{{ $deal->approved_at }}">
                         </div>
-                        <div class="col-md-6 mb-3 mt-4">
+                        <div class="col-md-6 mb-3 mt-3">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="recommend" name="recommend"
-                                       tabindex="1"
                                        value="1" {{ $deal->recommend?'checked':'' }}>
                                 <label for="recommend"
                                        class="form-check-label">{{ __('deal::deal.recommend') }}</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="big_discount" name="big_discount"
+                                       value="1" {{ $deal->big_discount?'checked':'' }}>
+                                <label for="big_discount"
+                                       class="form-check-label">{{ __('deal::deal.big_discount') }}</label>
                             </div>
                         </div>
                     </div> <!-- end row -->

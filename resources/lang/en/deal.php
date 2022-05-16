@@ -14,6 +14,7 @@ return [
     'brand' => 'Brand',
     'platform' => 'Platform',
     'recommend' => 'Recommend',
+    'big_discount' => 'Big Discount',
     'approved_at' => 'Approved At',
     'start_at' => 'Start At',
     'end_at' => 'End At',

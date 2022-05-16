@@ -26,6 +26,7 @@ class CreateDealsTable extends Migration
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->unsignedBigInteger('platform_id')->nullable();
             $table->boolean('recommend')->default(false);
+            $table->boolean('big_discount')->default(false);
             $table->timestamp('approved_at')->nullable();
             $table->timestamp('start_at');
             $table->timestamp('end_at');

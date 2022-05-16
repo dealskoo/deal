@@ -41,6 +41,7 @@
                                 <th>{{ __('deal::deal.brand') }}</th>
                                 <th>{{ __('deal::deal.platform') }}</th>
                                 <th>{{ __('deal::deal.recommend') }}</th>
+                                <th>{{ __('deal::deal.big_discount') }}</th>
                                 <th>{{ __('deal::deal.approved_at') }}</th>
                                 <th>{{ __('deal::deal.start_at') }}</th>
                                 <th>{{ __('deal::deal.end_at') }}</th>
@@ -83,12 +84,13 @@
                     {'orderable': true},
                     {'orderable': true},
                     {'orderable': true},
+                    {'orderable': true},
                     {'orderable': false},
                 ],
                 "order": [[0, "desc"]],
                 "drawCallback": function () {
                     $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-                    $('#deals_table tr td:nth-child(16)').addClass('table-action');
+                    $('#deals_table tr td:nth-child(17)').addClass('table-action');
                     delete_listener();
                 }
             });

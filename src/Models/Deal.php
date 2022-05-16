@@ -8,6 +8,7 @@ use Dealskoo\Brand\Traits\HasBrand;
 use Dealskoo\Category\Traits\HasCategory;
 use Dealskoo\Country\Traits\HasCountry;
 use Dealskoo\Platform\Traits\HasPlatform;
+use Dealskoo\Product\Models\Product;
 use Dealskoo\Product\Traits\HasProduct;
 use Dealskoo\Seller\Traits\HasSeller;
 use Illuminate\Database\Eloquent\Builder;
@@ -35,6 +36,7 @@ class Deal extends Model
         'brand_id',
         'platform_id',
         'recommend',
+        'big_discount',
         'approved_at',
         'start_at',
         'end_at'
@@ -42,6 +44,7 @@ class Deal extends Model
 
     protected $casts = [
         'recommend' => 'boolean',
+        'big_discount' => 'boolean',
         'approved_at' => 'datetime',
         'start_at' => 'datetime',
         'end_at' => 'datetime'
@@ -82,8 +85,7 @@ class Deal extends Model
     public function scopeBigDiscount(Builder $builder)
     {
         $now = Carbon::now();
-        $price = $this->product->price / 4;
-        return $builder->whereNotNull('approved_at')->where('start_at', '<=', $now)->where('end_at', '>=', $now)->where('price', '<=', $price);
+        return $builder->whereNotNull('approved_at')->where('start_at', '<=', $now)->where('end_at', '>=', $now)->where('big_discount', true);
     }
 
     public function scopeFreeShipping(Builder $builder)
@@ -99,7 +101,7 @@ class Deal extends Model
         return $builder->whereNotNull('approved_at')->where('start_at', '<=', $now)->where('end_at', '<=', $end);
     }
 
-    public function scopeZone(Builder $builder)
+    public function scopeZero(Builder $builder)
     {
         $now = Carbon::now();
         return $builder->whereNotNull('approved_at')->where('start_at', '<=', $now)->where('end_at', '>=', $now)->where('price', '<=', 0.01);
