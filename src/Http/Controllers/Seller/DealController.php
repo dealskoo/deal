@@ -7,6 +7,7 @@ use Dealskoo\Deal\Models\Deal;
 use Dealskoo\Product\Models\Product;
 use Dealskoo\Seller\Http\Controllers\Controller as SellerController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class DealController extends SellerController
 {
@@ -39,8 +40,8 @@ class DealController extends SellerController
         foreach ($deals as $deal) {
             $row = [];
             $row[] = $deal->id;
-            $row[] = $deal->title;
-            $row[] = $deal->price;
+            $row[] = $deal->title . ' <span class="badge bg-success">' . $deal->off . '%</span>';
+            $row[] = $deal->price . ' <del>' . $deal->product->price . '</del>';
             $row[] = $deal->ship_fee;
             $row[] = $deal->product->name;
             $row[] = $deal->category->name;
@@ -49,12 +50,16 @@ class DealController extends SellerController
             $row[] = $deal->platform ? $deal->platform->name : '';
             $row[] = $deal->recommend;
             $row[] = $deal->approved_at != null ? Carbon::parse($deal->approved_at)->format('Y-m-d H:i:s') : null;
-            $row[] = $deal->start_at != null ? Carbon::parse($deal->start_at)->format('Y-m-d H:i:s') : null;
-            $row[] = $deal->end_at != null ? Carbon::parse($deal->end_at)->format('Y-m-d H:i:s') : null;
+            $row[] = $deal->start_at != null ? Carbon::parse($deal->start_at)->format('Y-m-d') : null;
+            $row[] = $deal->end_at != null ? Carbon::parse($deal->end_at)->format('Y-m-d') : null;
             $row[] = Carbon::parse($deal->created_at)->format('Y-m-d H:i:s');
             $row[] = Carbon::parse($deal->updated_at)->format('Y-m-d H:i:s');
-            $edit_link = '<a href="' . route('seller.deal.edit', $deal) . '" class="action-icon"><i class="mdi mdi-square-edit-outline"></i></a>';
-            $destroy_link = '<a href="javascript:void(0);" class="action-icon delete-btn" data-table="deals_table" data-url="' . route('seller.deals.destroy', $deal) . '"> <i class="mdi mdi-delete"></i></a>';
+            $edit_link = '';
+            $destroy_link = '';
+            if ($deal->approved_at == null) {
+                $edit_link = '<a href="' . route('seller.deals.edit', $deal) . '" class="action-icon"><i class="mdi mdi-square-edit-outline"></i></a>';
+                $destroy_link = '<a href="javascript:void(0);" class="action-icon delete-btn" data-table="deals_table" data-url="' . route('seller.deals.destroy', $deal) . '"> <i class="mdi mdi-delete"></i></a>';
+            }
             $row[] = $edit_link . $destroy_link;
             $rows[] = $row;
         }
@@ -68,27 +73,64 @@ class DealController extends SellerController
 
     public function create(Request $request)
     {
-        $products = Product::approved()->where('seller_id', $request->user()->id);
+        $products = Product::approved()->where('seller_id', $request->user()->id)->get();
         return view('deal::seller.deal.create', ['products' => $products]);
     }
 
     public function store(Request $request)
     {
-
+        $request->validate([
+            'title' => ['required', 'string'],
+            'product_id' => ['required', 'exists:products,id'],
+            'price' => ['required', 'numeric'],
+            'ship_fee' => ['required', 'numeric'],
+            'activity_date' => ['required', 'string']
+        ]);
+        $between = explode(' - ', $request->input('activity_date'));
+        $start = date('Y-m-d', strtotime($between[0]));
+        $end = date('Y-m-d', strtotime($between[1]));
+        $product = Product::approved()->where('seller_id', $request->user()->id)->findOrFail($request->input('product_id'));
+        $deal = new Deal(Arr::collapse([$request->only([
+            'title', 'product_id', 'price', 'ship_fee'
+        ]), $product->only([
+            'seller_id', 'category_id', 'country_id', 'brand_id', 'platform_id'
+        ]), ['start_at' => $start, 'end_at' => $end]]));
+        $deal->save();
+        return redirect(route('seller.deals.index'));
     }
 
     public function edit(Request $request, $id)
     {
-
+        $deal = Deal::where('seller_id', $request->user()->id)->findOrFail($id);
+        $products = Product::approved()->where('seller_id', $request->user()->id)->get();
+        return view('deal::seller.deal.edit', ['deal' => $deal, 'products' => $products]);
     }
 
     public function update(Request $request, $id)
     {
-
+        $request->validate([
+            'title' => ['required', 'string'],
+            'product_id' => ['required', 'exists:products,id'],
+            'price' => ['required', 'numeric'],
+            'ship_fee' => ['required', 'numeric'],
+            'activity_date' => ['required', 'string']
+        ]);
+        $between = explode(' - ', $request->input('activity_date'));
+        $start = date('Y-m-d', strtotime($between[0]));
+        $end = date('Y-m-d', strtotime($between[1]));
+        $product = Product::approved()->where('seller_id', $request->user()->id)->findOrFail($request->input('product_id'));
+        $deal = Deal::where('seller_id', $request->user()->id)->findOrFail($id);
+        $deal->fill(Arr::collapse([$request->only([
+            'title', 'product_id', 'price', 'ship_fee'
+        ]), $product->only([
+            'seller_id', 'category_id', 'country_id', 'brand_id', 'platform_id'
+        ]), ['start_at' => $start, 'end_at' => $end]]));
+        $deal->save();
+        return redirect(route('seller.deals.index'));
     }
 
     public function destroy(Request $request, $id)
     {
-
+        return ['status' => Deal::where('seller_id', $request->user()->id)->where('approved_at', null)->where('id', $id)->delete()];
     }
 }

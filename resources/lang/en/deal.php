@@ -22,5 +22,10 @@ return [
     'action' => 'Action',
     'add_deal' => 'Add Deal',
     'edit_deal' => 'Edit Deal',
-    'view_deal' => 'View Deal'
+    'view_deal' => 'View Deal',
+    'title_placeholder' => 'Title',
+    'slug' => 'Slug',
+    'slug_placeholder' => 'Slug',
+    'product_price' => 'Product Price',
+    'approved' => 'Approved'
 ];

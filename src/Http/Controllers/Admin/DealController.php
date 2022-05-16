@@ -42,8 +42,8 @@ class DealController extends AdminController
         foreach ($deals as $deal) {
             $row = [];
             $row[] = $deal->id;
-            $row[] = $deal->title;
-            $row[] = $deal->price;
+            $row[] = $deal->title . ' <span class="badge bg-success">' . $deal->off . '%</span>';
+            $row[] = $deal->price . ' <del>' . $deal->product->price . '</del>';
             $row[] = $deal->ship_fee;
             $row[] = $deal->seller->name;
             $row[] = $deal->product->name;
@@ -53,18 +53,18 @@ class DealController extends AdminController
             $row[] = $deal->platform ? $deal->platform->name : '';
             $row[] = $deal->recommend;
             $row[] = $deal->approved_at != null ? Carbon::parse($deal->approved_at)->format('Y-m-d H:i:s') : null;
-            $row[] = $deal->start_at != null ? Carbon::parse($deal->start_at)->format('Y-m-d H:i:s') : null;
-            $row[] = $deal->end_at != null ? Carbon::parse($deal->end_at)->format('Y-m-d H:i:s') : null;
+            $row[] = $deal->start_at != null ? Carbon::parse($deal->start_at)->format('Y-m-d') : null;
+            $row[] = $deal->end_at != null ? Carbon::parse($deal->end_at)->format('Y-m-d') : null;
             $row[] = Carbon::parse($deal->created_at)->format('Y-m-d H:i:s');
             $row[] = Carbon::parse($deal->updated_at)->format('Y-m-d H:i:s');
             $view_link = '';
             if ($can_view) {
-                $view_link = '<a href="' . route('admin.deal.show', $deal) . '" class="action-icon"><i class="mdi mdi-eye"></i></a>';
+                $view_link = '<a href="' . route('admin.deals.show', $deal) . '" class="action-icon"><i class="mdi mdi-eye"></i></a>';
             }
 
             $edit_link = '';
             if ($can_edit) {
-                $edit_link = '<a href="' . route('admin.deal.edit', $deal) . '" class="action-icon"><i class="mdi mdi-square-edit-outline"></i></a>';
+                $edit_link = '<a href="' . route('admin.deals.edit', $deal) . '" class="action-icon"><i class="mdi mdi-square-edit-outline"></i></a>';
             }
             $row[] = $view_link . $edit_link;
             $rows[] = $row;
