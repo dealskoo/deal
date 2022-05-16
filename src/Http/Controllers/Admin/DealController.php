@@ -42,7 +42,7 @@ class DealController extends AdminController
         foreach ($deals as $deal) {
             $row = [];
             $row[] = $deal->id;
-            $row[] = $deal->title . ' <span class="badge bg-success">' . $deal->off . '%</span>';
+            $row[] = $deal->title . ' <span class="badge bg-success">' . $deal->off . '% Off</span>';
             $row[] = $deal->price . ' <del>' . $deal->product->price . '</del>';
             $row[] = $deal->ship_fee;
             $row[] = $deal->seller->name;
