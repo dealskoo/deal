@@ -19,7 +19,7 @@ class CreateDealsTable extends Migration
             $table->string('slug')->unique()->nullable();
             $table->decimal('price', 10, 2)->default(0);
             $table->decimal('ship_fee', 10, 2)->default(0);
-            $table->decimal('clicks', 10, 2)->default(0);
+            $table->integer('clicks')->default(0);
             $table->unsignedBigInteger('seller_id');
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('category_id');
