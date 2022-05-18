@@ -3,6 +3,7 @@
 namespace Dealskoo\Deal\Tests\Feature\Seller;
 
 use Carbon\Carbon;
+use Dealskoo\Country\Models\Country;
 use Dealskoo\Deal\Models\Deal;
 use Dealskoo\Product\Models\Product;
 use Dealskoo\Seller\Models\Seller;
@@ -31,6 +32,7 @@ class DealControllerTest extends TestCase
 
     public function test_create()
     {
+        $country = Country::factory()->create(['alpha2' => 'US']);
         $seller = Seller::factory()->create();
         $response = $this->actingAs($seller, 'seller')->get(route('seller.deals.create'));
         $response->assertStatus(200);
@@ -52,8 +54,9 @@ class DealControllerTest extends TestCase
 
     public function test_edit()
     {
+        $country = Country::factory()->create(['alpha2' => 'US']);
         $seller = Seller::factory()->create();
-        $deal = Deal::factory()->create(['seller_id' => $seller->id]);
+        $deal = Deal::factory()->create(['seller_id' => $seller->id, 'country_id' => $country->id]);
         $response = $this->actingAs($seller, 'seller')->get(route('seller.deals.edit', $deal));
         $response->assertStatus(200);
     }
