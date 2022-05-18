@@ -7,6 +7,7 @@ return [
     'title' => 'Title',
     'price' => 'Price',
     'ship_fee' => 'Ship Fee',
+    'clicks' => 'Clicks',
     'seller' => 'Seller',
     'product' => 'Product',
     'category' => 'Category',

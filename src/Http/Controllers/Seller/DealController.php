@@ -25,7 +25,7 @@ class DealController extends SellerController
         $start = $request->input('start', 0);
         $limit = $request->input('length', 10);
         $keyword = $request->input('search.value');
-        $columns = ['id', 'title', 'price', 'ship_fee', 'product_id', 'category_id', 'country_id', 'brand_id', 'platform_id', 'recommend', 'big_discount', 'approved_at', 'start_at', 'end_at', 'created_at', 'updated_at'];
+        $columns = ['id', 'title', 'price', 'ship_fee', 'clicks', 'product_id', 'category_id', 'country_id', 'brand_id', 'platform_id', 'recommend', 'big_discount', 'approved_at', 'start_at', 'end_at', 'created_at', 'updated_at'];
         $column = $columns[$request->input('order.0.column', 0)];
         $desc = $request->input('order.0.dir', 'desc');
         $query = Deal::query();
@@ -43,6 +43,7 @@ class DealController extends SellerController
             $row[] = $deal->title . ' <span class="badge bg-success">' . $deal->off . '% Off</span>';
             $row[] = $deal->price . ' <del>' . $deal->product->price . '</del>';
             $row[] = $deal->ship_fee;
+            $row[] = $deal->clicks;
             $row[] = $deal->product->name;
             $row[] = $deal->category->name;
             $row[] = $deal->country->name;

@@ -35,6 +35,7 @@
                                 <th>{{ __('deal::deal.title') }}</th>
                                 <th>{{ __('deal::deal.price') }}</th>
                                 <th>{{ __('deal::deal.ship_fee') }}</th>
+                                <th>{{ __('deal::deal.clicks') }}</th>
                                 <th>{{ __('deal::deal.product') }}</th>
                                 <th>{{ __('deal::deal.category') }}</th>
                                 <th>{{ __('deal::deal.country') }}</th>
@@ -85,12 +86,13 @@
                     {'orderable': true},
                     {'orderable': true},
                     {'orderable': true},
+                    {'orderable': true},
                     {'orderable': false},
                 ],
                 "order": [[0, "desc"]],
                 "drawCallback": function () {
                     $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-                    $('#deals_table tr td:nth-child(17)').addClass('table-action');
+                    $('#deals_table tr td:nth-child(18)').addClass('table-action');
                     delete_listener();
                 }
             });

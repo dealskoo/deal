@@ -29,6 +29,7 @@ class Deal extends Model
         'slug',
         'price',
         'ship_fee',
+        'clicks',
         'seller_id',
         'product_id',
         'category_id',
