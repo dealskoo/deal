@@ -41,8 +41,8 @@ class DealController extends SellerController
             $row = [];
             $row[] = $deal->id;
             $row[] = $deal->title . ' <span class="badge bg-success">' . $deal->off . '% Off</span>';
-            $row[] = $deal->price . ' <del>' . $deal->product->price . '</del>';
-            $row[] = $deal->ship_fee;
+            $row[] = $deal->country->currency_symbol . $deal->price . ' <del>' . $deal->country->currency_symbol . $deal->product->price . '</del>';
+            $row[] = $deal->country->currency_symbol . $deal->ship_fee;
             $row[] = $deal->clicks;
             $row[] = $deal->product->name;
             $row[] = $deal->category->name;
