@@ -40,7 +40,7 @@ class DealController extends SellerController
         foreach ($deals as $deal) {
             $row = [];
             $row[] = $deal->id;
-            $row[] = $deal->title . ' <span class="badge bg-success">' . $deal->off . '% Off</span>';
+            $row[] = $deal->title . ' <span class="badge bg-success">' . $deal->off . '% ' . __('Off') . '</span>';
             $row[] = $deal->country->currency_symbol . $deal->price . ' <del>' . $deal->country->currency_symbol . $deal->product->price . '</del>';
             $row[] = $deal->country->currency_symbol . $deal->ship_fee;
             $row[] = $deal->clicks;
