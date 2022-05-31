@@ -15,10 +15,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Deal extends Model
 {
-    use HasFactory, SoftDeletes, HasSlug, HasCategory, HasCountry, HasSeller, HasBrand, HasPlatform, HasProduct;
+    use HasFactory, SoftDeletes, HasSlug, HasCategory, HasCountry, HasSeller, HasBrand, HasPlatform, HasProduct, Searchable;
 
     protected $appends = [
         'cover', 'cover_url', 'off'
@@ -106,5 +107,30 @@ class Deal extends Model
     {
         $now = Carbon::now();
         return $builder->whereNotNull('approved_at')->where('start_at', '<=', $now)->where('end_at', '>=', $now)->where('price', '<=', 0.01);
+    }
+
+    public function shouldBeSearchable()
+    {
+        return $this->approved_at ? true : false;
+    }
+
+    public function toSearchableArray()
+    {
+        return $this->only([
+            'title',
+            'slug',
+            'price',
+            'ship_fee',
+            'clicks',
+            'seller_id',
+            'product_id',
+            'category_id',
+            'country_id',
+            'brand_id',
+            'platform_id',
+            'big_discount',
+            'start_at',
+            'end_at'
+        ]);
     }
 }
