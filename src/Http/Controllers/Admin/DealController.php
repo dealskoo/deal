@@ -7,6 +7,7 @@ use Dealskoo\Admin\Http\Controllers\Controller as AdminController;
 use Dealskoo\Admin\Rules\Slug;
 use Dealskoo\Deal\Models\Deal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class DealController extends AdminController
 {
@@ -42,7 +43,7 @@ class DealController extends AdminController
         foreach ($deals as $deal) {
             $row = [];
             $row[] = $deal->id;
-            $row[] = $deal->title . ' <span class="badge bg-success">' . $deal->off . '% ' . __('Off') . '</span>';
+            $row[] = Str::words($deal->title, 5, '...') . ' <span class="badge bg-success">' . $deal->off . '% ' . __('Off') . '</span>';
             $row[] = $deal->country->currency_symbol . $deal->price . ' <del>' . $deal->country->currency_symbol . $deal->product->price . '</del>';
             $row[] = $deal->country->currency_symbol . $deal->ship_fee;
             $row[] = $deal->clicks;

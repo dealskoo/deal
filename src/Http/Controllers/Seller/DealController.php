@@ -8,6 +8,7 @@ use Dealskoo\Product\Models\Product;
 use Dealskoo\Seller\Http\Controllers\Controller as SellerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class DealController extends SellerController
 {
@@ -40,7 +41,7 @@ class DealController extends SellerController
         foreach ($deals as $deal) {
             $row = [];
             $row[] = $deal->id;
-            $row[] = $deal->title . ' <span class="badge bg-success">' . $deal->off . '% ' . __('Off') . '</span>';
+            $row[] = Str::words($deal->title, 5, '...') . ' <span class="badge bg-success">' . $deal->off . '% ' . __('Off') . '</span>';
             $row[] = $deal->country->currency_symbol . $deal->price . ' <del>' . $deal->country->currency_symbol . $deal->product->price . '</del>';
             $row[] = $deal->country->currency_symbol . $deal->ship_fee;
             $row[] = $deal->clicks;
