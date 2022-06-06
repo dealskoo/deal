@@ -22,18 +22,29 @@ class DealFactory extends Factory
      */
     public function definition()
     {
-        $product = Product::factory()->approved()->create();
         return [
             'title' => $this->faker->title,
             'slug' => $this->faker->slug,
-            'price' => $this->faker->numberBetween(0, $product->price),
             'ship_fee' => $this->faker->numberBetween(0, 20),
-            'seller_id' => $product->seller_id,
-            'product_id' => $product->id,
-            'category_id' => $product->category_id,
-            'country_id' => $product->country_id,
-            'brand_id' => $product->brand_id,
-            'platform_id' => $product->platform_id,
+            'product_id' => Product::factory(),
+            'price' => function ($deal) {
+                return $this->faker->numberBetween(0, Product::find($deal['product_id'])->price);
+            },
+            'seller_id' => function ($deal) {
+                return Product::find($deal['product_id'])->seller_id;
+            },
+            'category_id' => function ($deal) {
+                return Product::find($deal['product_id'])->category_id;
+            },
+            'country_id' => function ($deal) {
+                return Product::find($deal['product_id'])->country_id;
+            },
+            'brand_id' => function ($deal) {
+                return Product::find($deal['product_id'])->brand_id;
+            },
+            'platform_id' => function ($deal) {
+                return Product::find($deal['product_id'])->platform_id;
+            },
             'recommend' => false,
             'big_discount' => false,
             'start_at' => $this->faker->dateTime,
