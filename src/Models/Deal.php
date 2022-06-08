@@ -2,13 +2,11 @@
 
 namespace Dealskoo\Deal\Models;
 
-use Carbon\Carbon;
 use Dealskoo\Admin\Traits\HasSlug;
 use Dealskoo\Brand\Traits\HasBrand;
 use Dealskoo\Category\Traits\HasCategory;
 use Dealskoo\Country\Traits\HasCountry;
 use Dealskoo\Platform\Traits\HasPlatform;
-use Dealskoo\Product\Models\Product;
 use Dealskoo\Product\Traits\HasProduct;
 use Dealskoo\Seller\Traits\HasSeller;
 use Illuminate\Database\Eloquent\Builder;
@@ -74,38 +72,38 @@ class Deal extends Model
 
     public function scopeAvaiabled(Builder $builder)
     {
-        $now = Carbon::now();
+        $now = now();
         return $builder->whereNotNull('approved_at')->where('start_at', '<=', $now)->where('end_at', '>=', $now);
     }
 
     public function scopeBestDeals(Builder $builder)
     {
-        $now = Carbon::now();
+        $now = now();
         return $builder->whereNotNull('approved_at')->where('start_at', '<=', $now)->where('end_at', '>=', $now)->where('recommend', true);
     }
 
     public function scopeBigDiscount(Builder $builder)
     {
-        $now = Carbon::now();
+        $now = now();
         return $builder->whereNotNull('approved_at')->where('start_at', '<=', $now)->where('end_at', '>=', $now)->where('big_discount', true);
     }
 
     public function scopeFreeShipping(Builder $builder)
     {
-        $now = Carbon::now();
+        $now = now();
         return $builder->whereNotNull('approved_at')->where('start_at', '<=', $now)->where('end_at', '>=', $now)->where('ship_fee', '=', 0);
     }
 
     public function scopeLimitedTime(Builder $builder)
     {
-        $now = Carbon::now();
+        $now = now();
         $end = $now->addDay();
         return $builder->whereNotNull('approved_at')->where('start_at', '<=', $now)->where('end_at', '<=', $end);
     }
 
     public function scopeZero(Builder $builder)
     {
-        $now = Carbon::now();
+        $now = now();
         return $builder->whereNotNull('approved_at')->where('start_at', '<=', $now)->where('end_at', '>=', $now)->where('price', '<=', 0.01);
     }
 

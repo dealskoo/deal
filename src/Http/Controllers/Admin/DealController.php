@@ -2,7 +2,6 @@
 
 namespace Dealskoo\Deal\Http\Controllers\Admin;
 
-use Carbon\Carbon;
 use Dealskoo\Admin\Http\Controllers\Controller as AdminController;
 use Dealskoo\Admin\Rules\Slug;
 use Dealskoo\Deal\Models\Deal;
@@ -106,7 +105,7 @@ class DealController extends AdminController
         ]));
         $deal->recommend = $request->boolean('recommend', false);
         $deal->big_discount = $request->boolean('big_discount', false);
-        $deal->approved_at = $request->boolean('approved', false) ? Carbon::now() : null;
+        $deal->approved_at = $request->boolean('approved', false) ? now() : null;
         $deal->save();
         return back()->with('success', __('admin::admin.update_success'));
     }
