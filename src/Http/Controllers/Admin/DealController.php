@@ -55,11 +55,11 @@ class DealController extends AdminController
             $row[] = $deal->platform ? $deal->platform->name : '';
             $row[] = $deal->recommend;
             $row[] = $deal->big_discount;
-            $row[] = $deal->approved_at != null ? Carbon::parse($deal->approved_at)->format('Y-m-d H:i:s') : null;
-            $row[] = $deal->start_at != null ? Carbon::parse($deal->start_at)->format('Y-m-d') : null;
-            $row[] = $deal->end_at != null ? Carbon::parse($deal->end_at)->format('Y-m-d') : null;
-            $row[] = Carbon::parse($deal->created_at)->format('Y-m-d H:i:s');
-            $row[] = Carbon::parse($deal->updated_at)->format('Y-m-d H:i:s');
+            $row[] = $deal->approved_at != null ? $deal->approved_at->format('Y-m-d H:i:s') : null;
+            $row[] = $deal->start_at != null ? $deal->start_at->format('Y-m-d') : null;
+            $row[] = $deal->end_at != null ? $deal->end_at->format('Y-m-d') : null;
+            $row[] = $deal->created_at->format('Y-m-d H:i:s');
+            $row[] = $deal->updated_at->format('Y-m-d H:i:s');
             $view_link = '';
             if ($can_view) {
                 $view_link = '<a href="' . route('admin.deals.show', $deal) . '" class="action-icon"><i class="mdi mdi-eye"></i></a>';

@@ -76,7 +76,7 @@
                                     - {{ __('deal::deal.end_at') }}</label>
                                 <input type="text" class="form-control date" id="activity_date" name="activity_date"
                                     data-toggle="date-picker"
-                                    value="{{ old('activity_date', \Carbon\Carbon::parse($deal->start_at)->format('m/d/Y') . ' - ' . \Carbon\Carbon::parse($deal->end_at)->format('m/d/Y')) }}"
+                                    value="{{ old('activity_date', $deal->start_at->format('m/d/Y') . ' - ' . $deal->end_at->format('m/d/Y')) }}"
                                     required tabindex="5">
                             </div>
                         </div> <!-- end row -->
