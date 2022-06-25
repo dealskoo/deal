@@ -99,8 +99,8 @@ class Deal extends Model
     public function scopeLimitedTime(Builder $builder)
     {
         $now = now();
-        $end = $now->addDays(3);
-        return $builder->whereNotNull('approved_at')->where('start_at', '<=', $now)->where('end_at', '<=', $end);
+        $end = now()->addDays(3);
+        return $builder->whereNotNull('approved_at')->where('start_at', '<=', $now)->where('end_at', '>=', $now)->where('end_at', '<=', $end);
     }
 
     public function scopeZero(Builder $builder)
